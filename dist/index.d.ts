@@ -5,15 +5,15 @@ interface RedisStore extends Store {
     name: string;
     getClient: () => RedisClientType;
     isCacheableValue: any;
-    set: (key: any, value: any, options: any, cb: any) => Promise<any>;
-    get: (key: any, options: any, cb: any) => Promise<any>;
+    set: <T>(key: any, value: T, options?: any, cb?: any) => Promise<void>;
+    get: <T>(key: any, options?: any, cb?: any) => Promise<T | undefined>;
     del: (...args: any[]) => Promise<any>;
     mset: (...args: any[]) => Promise<any>;
     mget: (...args: any[]) => Promise<any>;
     mdel: (...args: any[]) => Promise<any>;
-    reset: (cb: any) => Promise<any>;
-    keys: (pattern: string, cb: any) => Promise<any>;
-    ttl: (key: any, cb: any) => Promise<any>;
+    reset: () => Promise<void>;
+    keys: (pattern: string) => Promise<any>;
+    ttl: (key: any) => Promise<any>;
 }
 
 export function redisStore(config: RedisClientOptions & StoreConfig): Promise<RedisStore>;
